@@ -5,7 +5,7 @@
 - Unity 2019
 - Unity 2018
 - Unity 2017
-- Unity 5
+- [Unity 5](https://github.com/Catalonium/Quikbar/tree/unity_5)
 
 ## Usage
  Place the folder under any Project Hierarchy sub-folder named "Editor"
