@@ -7,4 +7,4 @@
 
 ## Usage
  Place the folder under any Project Hierarchy sub-folder named "Editor"
- Access with top menu entry "Tools/Quikbar" or Ctrl+Shift+1 (Cmd+Shift+1 on MacOS)
+ Access with top menu entry "Window/Quikbar" or Ctrl+Shift+1 (Cmd+Shift+1 on MacOS)
