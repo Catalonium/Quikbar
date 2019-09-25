@@ -1,4 +1,4 @@
-//	Quikbar for Unity 2017
+//	Quikbar for Unity 2018
 //  A simple Unity Editor usage and accessibility improvement tool.
 //
 //  Usage:
@@ -8,11 +8,14 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.SceneManagement;
-using System;
 
 class Quikbar : EditorWindow
 {
-    public Vector2 windowSize = new Vector2(100, 550);
+    bool isStartup = true;
+
+    float windowScrollHeight = 800;
+    Vector2 minWindowSize = new Vector2(120, 120);
+    Vector2 scrollPos;
 
     [MenuItem("Window/Quikbar %#1")]
     static void Init()
@@ -24,7 +27,6 @@ class Quikbar : EditorWindow
     void OnInspectorUpdate()
     {
         Repaint();
-        this.minSize = new Vector2(this.minSize.x, windowSize.y);
     }
 
     GUIStyle FrontEnd(string type)
@@ -37,15 +39,33 @@ class Quikbar : EditorWindow
             guiStyle.fontSize = 9;
             guiStyle.richText = true;
             guiStyle.wordWrap = true;
+            guiStyle.padding.top = 2;
+            guiStyle.padding.bottom = -2;
+            guiStyle.padding.left = 5;
+            guiStyle.padding.right = 5;
+        }
+        // sublabel
+        if (type.Equals("sublabel"))
+        {
+            guiStyle = GUI.skin.GetStyle("label");
+            guiStyle.fontSize = 7;
+            guiStyle.richText = true;
+            guiStyle.wordWrap = true;
+            guiStyle.padding.top = 2;
+            guiStyle.padding.bottom = -2;
+            guiStyle.padding.left = 5;
+            guiStyle.padding.right = 5;
         }
         // button
         if (type.Equals("button"))
         {
             guiStyle = GUI.skin.GetStyle("minibutton");
             //guiStyle.fixedWidth = 94f;
-            guiStyle.fixedWidth = this.position.size.x - 6;
-            guiStyle.fixedHeight = 16f;
             guiStyle.fontSize = 9;
+            guiStyle.fixedHeight = 16f;
+            if (this.position.height < windowScrollHeight)
+                guiStyle.fixedWidth = this.position.size.x - 22;
+            else guiStyle.fixedWidth = this.position.size.x - 6;
         }
         // dropdown
         if (type.Equals("dropdown"))
@@ -74,6 +94,11 @@ class Quikbar : EditorWindow
             sceneName = SceneManager.GetActiveScene().name;
         GUILayout.Label("<b>Current scene:</b>\n" + sceneName, FrontEnd("label"));
 
+        if (this.position.height < windowScrollHeight)
+        {
+            scrollPos = GUILayout.BeginScrollView(scrollPos, false, true);
+        }
+
         // Buttons
         GUILayout.Space(4f);
 
@@ -83,185 +108,263 @@ class Quikbar : EditorWindow
             EditorApplication.ExecuteMenuItem("Edit/Snap Settings...");
         }
 
-        GUILayout.Space(6f);
+        GUILayout.Space(4f);
 
-        guiBuilder.text = "Input Manager";
-        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
-        {
-            EditorApplication.ExecuteMenuItem("Edit/Project Settings/Input");
-        }
+        // Project Settings
+        GUILayout.Label("Project Settings", FrontEnd("label"));
 
-        guiBuilder.text = "Tags & Layers";
-        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
-        {
-            EditorApplication.ExecuteMenuItem("Edit/Project Settings/Tags and Layers");
-        }
-
-        GUILayout.Space(6f);
-
-        guiBuilder.text = "Player Settings";
-        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
-        {
-            EditorApplication.ExecuteMenuItem("Edit/Project Settings/Player");
-        }
-
-        guiBuilder.text = "3D Physics";
-        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
-        {
-            EditorApplication.ExecuteMenuItem("Edit/Project Settings/Physics");
-        }
-
-        guiBuilder.text = "2D Physics";
-        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
-        {
-            EditorApplication.ExecuteMenuItem("Edit/Project Settings/Physics 2D");
-        }
-
-        guiBuilder.text = "Time Manager";
-        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
-        {
-            EditorApplication.ExecuteMenuItem("Edit/Project Settings/Time");
-        }
+        GUILayout.Space(2f);
 
         guiBuilder.text = "Audio";
         if (GUILayout.Button(guiBuilder, FrontEnd("button")))
         {
-            EditorApplication.ExecuteMenuItem("Edit/Project Settings/Audio");
+            SettingsService.OpenProjectSettings("Project/Audio");
+        }
+
+        guiBuilder.text = "Editor";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Project/Editor");
+        }
+
+        guiBuilder.text = "Graphics";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Project/Graphics");
+        }
+
+        guiBuilder.text = "Input";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Project/Input");
+        }
+
+        guiBuilder.text = "Physics 3D";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Project/Physics");
+        }
+
+        guiBuilder.text = "Physics 2D";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Project/Physics 2D");
+        }
+
+        guiBuilder.text = "Player";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Project/Player");
+        }
+
+        guiBuilder.text = "Preset Manager";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Project/Preset Manager");
         }
 
         guiBuilder.text = "Quality";
         if (GUILayout.Button(guiBuilder, FrontEnd("button")))
         {
-            EditorApplication.ExecuteMenuItem("Edit/Project Settings/Quality");
-        }
-
-        GUILayout.Space(6f);
-
-        guiBuilder.text = "Graphics";
-        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
-        {
-            EditorApplication.ExecuteMenuItem("Edit/Project Settings/Graphics");
-        }
-
-        string[] graphicsEmulationsList = { "No Emulation", "Shader Model 4", "Shader Model 3", "Shader Model 2" };
-        for (int i = 0; i < graphicsEmulationsList.Length; i++)
-        {
-            if (Menu.GetChecked("Edit/Graphics Emulation/" + graphicsEmulationsList[i]))
-            {
-                i = EditorGUILayout.Popup(i, graphicsEmulationsList, FrontEnd("dropdown"));
-                EditorApplication.ExecuteMenuItem("Edit/Graphics Emulation/" + graphicsEmulationsList[i]);
-            }
-        }
-
-        string[] shaderHardwareTiersList = { "Tier 1", "Tier 2", "Tier 3" };
-        for (int i = 0; i < shaderHardwareTiersList.Length; i++)
-        {
-            if (Menu.GetChecked("Edit/Graphics Emulation/Shader Hardware " + shaderHardwareTiersList[i]))
-            {
-                i = EditorGUILayout.Popup(i, shaderHardwareTiersList, FrontEnd("dropdown"));
-                EditorApplication.ExecuteMenuItem("Edit/Graphics Emulation/Shader Hardware " + shaderHardwareTiersList[i]);
-            }
-        }
-
-        GUILayout.Space(6f);
-
-        guiBuilder.text = "Network";
-        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
-        {
-            EditorApplication.ExecuteMenuItem("Edit/Project Settings/Network");
-        }
-
-        string[] netEmulationsList = { "None", "Broadband", "DSL", "ISDN", "Dial-Up" };
-        for (int i = 0; i < netEmulationsList.Length; i++)
-        {
-            if (Menu.GetChecked("Edit/Network Emulation/" + netEmulationsList[i]))
-            {
-                i = EditorGUILayout.Popup(i, netEmulationsList, FrontEnd("dropdown"));
-                EditorApplication.ExecuteMenuItem("Edit/Network Emulation/" + netEmulationsList[i]);
-            }
-        }
-
-        GUILayout.Space(6f);
-
-        guiBuilder.text = "Audio Mixer";
-        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
-        {
-            EditorApplication.ExecuteMenuItem("Window/Audio Mixer");
-        }
-
-        guiBuilder.text = "Sprite Packer";
-        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
-        {
-            EditorApplication.ExecuteMenuItem("Window/Sprite Packer");
-        }
-
-        guiBuilder.text = "Lighting Settings";
-        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
-        {
-            EditorApplication.ExecuteMenuItem("Window/Lighting/Settings");
-        }
-
-        guiBuilder.text = "Light Explorer";
-        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
-        {
-            EditorApplication.ExecuteMenuItem("Window/Lighting/Light Explorer");
-        }
-
-        guiBuilder.text = "Occlusion";
-        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
-        {
-            EditorApplication.ExecuteMenuItem("Window/Occlusion Culling");
-        }
-
-        guiBuilder.text = "Navigation";
-        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
-        {
-            EditorApplication.ExecuteMenuItem("Window/Navigation");
-        }
-
-        GUILayout.Space(6f);
-
-        guiBuilder.text = "Profiler";
-        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
-        {
-            EditorApplication.ExecuteMenuItem("Window/Profiler");
-        }
-
-        guiBuilder.text = "Frame Debug";
-        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
-        {
-            EditorApplication.ExecuteMenuItem("Window/Frame Debugger");
-        }
-
-        guiBuilder.text = "Test Runner";
-        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
-        {
-            EditorApplication.ExecuteMenuItem("Window/Test Runner");
-        }
-
-        guiBuilder.text = "Editor Settings";
-        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
-        {
-            EditorApplication.ExecuteMenuItem("Edit/Project Settings/Editor");
+            SettingsService.OpenProjectSettings("Project/Quality");
         }
 
         guiBuilder.text = "Script Execution";
         if (GUILayout.Button(guiBuilder, FrontEnd("button")))
         {
-            EditorApplication.ExecuteMenuItem("Edit/Project Settings/Script Execution Order");
+            SettingsService.OpenProjectSettings("Project/Script Execution Order");
         }
 
-        GUILayout.Space(6f);
+        guiBuilder.text = "Tags and Layers";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Project/Tags and Layers");
+        }
+
+        guiBuilder.text = "TextMesh Pro";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Project/TextMesh Pro");
+        }
+
+        guiBuilder.text = "Time";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Project/Time");
+        }
+
+        guiBuilder.text = "VFX";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Project/VFX");
+        }
+
+        GUILayout.Space(4f);
+
+        // Windows
+        GUILayout.Label("Windows", FrontEnd("label"));
+        // General
+        GUILayout.Label("General", FrontEnd("sublabel"));
+
+        guiBuilder.text = "Test Runner";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Window/General/Test Runner");
+        }
+
+        // Rendering
+        GUILayout.Label("Rendering", FrontEnd("sublabel"));
+
+        guiBuilder.text = "Lighting Settings";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Window/Rendering/Lighting Settings");
+        }
+
+        guiBuilder.text = "Light Explorer";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Window/Rendering/Light Explorer");
+        }
+
+        guiBuilder.text = "Occlusion Culling";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Window/Rendering/Occlusion Culling");
+        }
+
+        // Animation
+        GUILayout.Label("Animation", FrontEnd("sublabel"));
+
+        guiBuilder.text = "Animation";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Window/Animation/Animation");
+        }
+
+        guiBuilder.text = "Animator";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Window/Animation/Animator");
+        }
+
+        guiBuilder.text = "Animator Params";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Window/Rendering/Animator Parameter");
+        }
+
+        // Audio
+        GUILayout.Label("Audio", FrontEnd("sublabel"));
+
+        guiBuilder.text = "Audio Mixer";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Window/Audio/Audio Mixer");
+        }
+
+        // Sequencing
+        GUILayout.Label("Sequencing", FrontEnd("sublabel"));
+
+        guiBuilder.text = "Timeline";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Window/Sequencing/Timeline");
+        }
+
+        // Analysis
+        GUILayout.Label("Analysis", FrontEnd("sublabel"));
+
+        guiBuilder.text = "Profiler";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Window/Analysis/Profiler");
+        }
+
+        guiBuilder.text = "Frame Debug";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Window/Analysis/Frame Debugger");
+        }
+
+        guiBuilder.text = "Physics Debug";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Window/Analysis/Physics Debugger");
+        }
+
+        guiBuilder.text = "UIElements Debug";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Window/Analysis/UIElements Debugger");
+        }
+
+        // 2D
+        GUILayout.Label("2D", FrontEnd("sublabel"));
+
+        guiBuilder.text = "Sprite Editor";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Window/2D/Sprite Editor");
+        }
+
+        guiBuilder.text = "Sprite Packer";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Window/2D/Sprite Packer");
+        }
+
+        guiBuilder.text = "Tile Palette";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Window/2D/Tile Palette");
+        }
+
+        // AI
+        GUILayout.Label("AI", FrontEnd("sublabel"));
+
+        guiBuilder.text = "Navigation";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            SettingsService.OpenProjectSettings("Window/AI/Navigation");
+        }
+
+        GUILayout.Space(4f);
+
+        // Build
+        GUILayout.Label("Build", FrontEnd("label"));
 
         guiBuilder.text = "Build Settings";
         if (GUILayout.Button(guiBuilder, FrontEnd("button")))
         {
-            GetWindow(Type.GetType("UnityEditor.BuildPlayerWindow,UnityEditor"));
+            EditorApplication.ExecuteMenuItem("File/Build Settings...");
+        }
+
+        guiBuilder.text = "Player Settings";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            Selection.activeObject = Unsupported.GetSerializedAssetInterfaceSingleton("PlayerSettings");
+        }
+
+        GUILayout.Space(4f);
+
+        // Window sizing process at startup
+        if (isStartup)
+        {
+            // Main window sizing
+            this.minSize = minWindowSize;
+            //windowScrollHeight = this.position.height;
+            isStartup = false;
         }
 
         // Cache Cleaner
         guiBuilder.tooltip = "";
         guiBuilder.text = "";
+
+        if (this.position.height < windowScrollHeight)
+        {
+            GUILayout.EndScrollView();
+        }
 
         // Layout End
         GUILayout.EndVertical();
