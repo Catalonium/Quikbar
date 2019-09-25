@@ -3,7 +3,7 @@
 //
 //  Usage:
 //  Place the folder under any Project Hierarchy sub-folder named "Editor"
-//  Access with top menu entry "Tools/Quikbar" or Ctrl+Shift+1 (Cmd+Shift+1 on MacOS)
+//  Access with top menu entry "Window/Quikbar" or Ctrl+Shift+1 (Cmd+Shift+1 on MacOS)
 
 using UnityEngine;
 using UnityEditor;
@@ -14,7 +14,7 @@ class Quikbar : EditorWindow
 {
     public Vector2 windowSize = new Vector2(100, 533);
 
-    [MenuItem("Tools/Quikbar %#1")]
+    [MenuItem("Window/Quikbar %#1")]
     static void Init()
     {
         var window = (Quikbar)GetWindow(typeof(Quikbar), false, "Quikbar");
@@ -25,7 +25,6 @@ class Quikbar : EditorWindow
     {
         Repaint();
         this.minSize = new Vector2(this.minSize.x, windowSize.y);
-        this.maxSize = new Vector2(this.maxSize.x, windowSize.y);
     }
 
     GUIStyle FrontEnd(string type)
