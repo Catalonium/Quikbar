@@ -2,8 +2,8 @@
  A simple Unity Editor usage and accessibility improvement tool.
 
 ## Versions
-- Unity 2019
-- Unity 2018
+- [Unity 2019](https://github.com/Catalonium/Quikbar/tree/unity_2019)
+- [Unity 2018](https://github.com/Catalonium/Quikbar/tree/unity_2018)
 - [Unity 2017](https://github.com/Catalonium/Quikbar/tree/unity_2017)
 - [Unity 5](https://github.com/Catalonium/Quikbar/tree/unity_5)
 
