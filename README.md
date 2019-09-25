@@ -1,4 +1,4 @@
-# Quikbar for Unity 2017
+# Quikbar for Unity 2018
  A simple Unity Editor usage and accessibility improvement tool.
  
  [Click here for other versions](https://github.com/Catalonium/Quikbar/tree/master)
