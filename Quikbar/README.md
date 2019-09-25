@@ -1,9 +1,7 @@
-# Quikbar
+# Quikbar for Unity 5
  A simple Unity Editor usage and accessibility improvement tool.
-
-## Versions
-- Current: Unity 5
-- [All versions](https://github.com/Catalonium/Quikbar/tree/master)
+ 
+ [Click here for other versions](https://github.com/Catalonium/Quikbar/tree/master)
 
 ## Usage
  Place the folder under any Project Hierarchy sub-folder named "Editor"
