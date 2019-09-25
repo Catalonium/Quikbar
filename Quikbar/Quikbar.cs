@@ -1,9 +1,9 @@
-//	Quikbar for Unity 5
+//	Quikbar for Unity 2017
 //  A simple Unity Editor usage and accessibility improvement tool.
 //
 //  Usage:
 //  Place the folder under any Project Hierarchy sub-folder named "Editor"
-//  Access with top menu entry "Tools/Quikbar" or Ctrl+Shift+1 (Cmd+Shift+1 on MacOS)
+//  Access with top menu entry "Window/Quikbar" or Ctrl+Shift+1 (Cmd+Shift+1 on MacOS)
 
 using UnityEngine;
 using UnityEditor;
@@ -12,9 +12,9 @@ using System;
 
 class Quikbar : EditorWindow
 {
-    public Vector2 windowSize = new Vector2(100, 533);
+    public Vector2 windowSize = new Vector2(100, 550);
 
-    [MenuItem("Tools/Quikbar %#1")]
+    [MenuItem("Window/Quikbar %#1")]
     static void Init()
     {
         var window = (Quikbar)GetWindow(typeof(Quikbar), false, "Quikbar");
@@ -25,7 +25,6 @@ class Quikbar : EditorWindow
     {
         Repaint();
         this.minSize = new Vector2(this.minSize.x, windowSize.y);
-        this.maxSize = new Vector2(this.maxSize.x, windowSize.y);
     }
 
     GUIStyle FrontEnd(string type)
@@ -196,10 +195,16 @@ class Quikbar : EditorWindow
             EditorApplication.ExecuteMenuItem("Window/Sprite Packer");
         }
 
-        guiBuilder.text = "Lighting";
+        guiBuilder.text = "Lighting Settings";
         if (GUILayout.Button(guiBuilder, FrontEnd("button")))
         {
-            EditorApplication.ExecuteMenuItem("Window/Lighting");
+            EditorApplication.ExecuteMenuItem("Window/Lighting/Settings");
+        }
+
+        guiBuilder.text = "Light Explorer";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            EditorApplication.ExecuteMenuItem("Window/Lighting/Light Explorer");
         }
 
         guiBuilder.text = "Occlusion";
@@ -228,10 +233,10 @@ class Quikbar : EditorWindow
             EditorApplication.ExecuteMenuItem("Window/Frame Debugger");
         }
 
-        guiBuilder.text = "Editor Testing";
+        guiBuilder.text = "Test Runner";
         if (GUILayout.Button(guiBuilder, FrontEnd("button")))
         {
-            EditorApplication.ExecuteMenuItem("Window/Editor Tests Runner");
+            EditorApplication.ExecuteMenuItem("Window/Test Runner");
         }
 
         guiBuilder.text = "Editor Settings";
