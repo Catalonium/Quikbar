@@ -1,4 +1,4 @@
-//  Quikbar for Unity 2018
+//	Quikbar for Unity 2019
 //  A simple Unity Editor usage and accessibility improvement tool.
 //
 //  Usage:
@@ -302,22 +302,10 @@ class Quikbar : EditorWindow
         // 2D
         GUILayout.Label("2D", FrontEnd("sublabel"));
 
-        guiBuilder.text = "Sprite Editor";
-        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
-        {
-            EditorApplication.ExecuteMenuItem("Window/2D/Sprite Editor");
-        }
-
         guiBuilder.text = "Sprite Packer";
         if (GUILayout.Button(guiBuilder, FrontEnd("button")))
         {
             EditorApplication.ExecuteMenuItem("Window/2D/Sprite Packer");
-        }
-
-        guiBuilder.text = "Tile Palette";
-        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
-        {
-            EditorApplication.ExecuteMenuItem("Window/2D/Tile Palette");
         }
 
         // AI
@@ -327,6 +315,15 @@ class Quikbar : EditorWindow
         if (GUILayout.Button(guiBuilder, FrontEnd("button")))
         {
             EditorApplication.ExecuteMenuItem("Window/AI/Navigation");
+        }
+
+        // UI
+        GUILayout.Label("UI", FrontEnd("sublabel"));
+
+        guiBuilder.text = "UIElements Samples";
+        if (GUILayout.Button(guiBuilder, FrontEnd("button")))
+        {
+            EditorApplication.ExecuteMenuItem("Window/UI/UIElements Samples");
         }
 
         GUILayout.Space(4f);
