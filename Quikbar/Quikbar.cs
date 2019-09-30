@@ -1,4 +1,4 @@
-//	Quikbar for Unity 2018
+//  Quikbar for Unity 2018
 //  A simple Unity Editor usage and accessibility improvement tool.
 //
 //  Usage:
@@ -209,7 +209,7 @@ class Quikbar : EditorWindow
         guiBuilder.text = "Test Runner";
         if (GUILayout.Button(guiBuilder, FrontEnd("button")))
         {
-            SettingsService.OpenProjectSettings("Window/General/Test Runner");
+            EditorApplication.ExecuteMenuItem("Window/General/Test Runner");
         }
 
         // Rendering
@@ -218,19 +218,19 @@ class Quikbar : EditorWindow
         guiBuilder.text = "Lighting Settings";
         if (GUILayout.Button(guiBuilder, FrontEnd("button")))
         {
-            SettingsService.OpenProjectSettings("Window/Rendering/Lighting Settings");
+            EditorApplication.ExecuteMenuItem("Window/Rendering/Lighting Settings");
         }
 
         guiBuilder.text = "Light Explorer";
         if (GUILayout.Button(guiBuilder, FrontEnd("button")))
         {
-            SettingsService.OpenProjectSettings("Window/Rendering/Light Explorer");
+            EditorApplication.ExecuteMenuItem("Window/Rendering/Light Explorer");
         }
 
         guiBuilder.text = "Occlusion Culling";
         if (GUILayout.Button(guiBuilder, FrontEnd("button")))
         {
-            SettingsService.OpenProjectSettings("Window/Rendering/Occlusion Culling");
+            EditorApplication.ExecuteMenuItem("Window/Rendering/Occlusion Culling");
         }
 
         // Animation
@@ -239,19 +239,19 @@ class Quikbar : EditorWindow
         guiBuilder.text = "Animation";
         if (GUILayout.Button(guiBuilder, FrontEnd("button")))
         {
-            SettingsService.OpenProjectSettings("Window/Animation/Animation");
+            EditorApplication.ExecuteMenuItem("Window/Animation/Animation");
         }
 
         guiBuilder.text = "Animator";
         if (GUILayout.Button(guiBuilder, FrontEnd("button")))
         {
-            SettingsService.OpenProjectSettings("Window/Animation/Animator");
+            EditorApplication.ExecuteMenuItem("Window/Animation/Animator");
         }
 
         guiBuilder.text = "Animator Params";
         if (GUILayout.Button(guiBuilder, FrontEnd("button")))
         {
-            SettingsService.OpenProjectSettings("Window/Rendering/Animator Parameter");
+            EditorApplication.ExecuteMenuItem("Window/Animation/Animator Parameter");
         }
 
         // Audio
@@ -260,7 +260,7 @@ class Quikbar : EditorWindow
         guiBuilder.text = "Audio Mixer";
         if (GUILayout.Button(guiBuilder, FrontEnd("button")))
         {
-            SettingsService.OpenProjectSettings("Window/Audio/Audio Mixer");
+            EditorApplication.ExecuteMenuItem("Window/Audio/Audio Mixer");
         }
 
         // Sequencing
@@ -269,7 +269,7 @@ class Quikbar : EditorWindow
         guiBuilder.text = "Timeline";
         if (GUILayout.Button(guiBuilder, FrontEnd("button")))
         {
-            SettingsService.OpenProjectSettings("Window/Sequencing/Timeline");
+            EditorApplication.ExecuteMenuItem("Window/Sequencing/Timeline");
         }
 
         // Analysis
@@ -278,25 +278,25 @@ class Quikbar : EditorWindow
         guiBuilder.text = "Profiler";
         if (GUILayout.Button(guiBuilder, FrontEnd("button")))
         {
-            SettingsService.OpenProjectSettings("Window/Analysis/Profiler");
+            EditorApplication.ExecuteMenuItem("Window/Analysis/Profiler");
         }
 
         guiBuilder.text = "Frame Debug";
         if (GUILayout.Button(guiBuilder, FrontEnd("button")))
         {
-            SettingsService.OpenProjectSettings("Window/Analysis/Frame Debugger");
+            EditorApplication.ExecuteMenuItem("Window/Analysis/Frame Debugger");
         }
 
         guiBuilder.text = "Physics Debug";
         if (GUILayout.Button(guiBuilder, FrontEnd("button")))
         {
-            SettingsService.OpenProjectSettings("Window/Analysis/Physics Debugger");
+            EditorApplication.ExecuteMenuItem("Window/Analysis/Physics Debugger");
         }
 
         guiBuilder.text = "UIElements Debug";
         if (GUILayout.Button(guiBuilder, FrontEnd("button")))
         {
-            SettingsService.OpenProjectSettings("Window/Analysis/UIElements Debugger");
+            EditorApplication.ExecuteMenuItem("Window/Analysis/UIElements Debugger");
         }
 
         // 2D
@@ -305,19 +305,19 @@ class Quikbar : EditorWindow
         guiBuilder.text = "Sprite Editor";
         if (GUILayout.Button(guiBuilder, FrontEnd("button")))
         {
-            SettingsService.OpenProjectSettings("Window/2D/Sprite Editor");
+            EditorApplication.ExecuteMenuItem("Window/2D/Sprite Editor");
         }
 
         guiBuilder.text = "Sprite Packer";
         if (GUILayout.Button(guiBuilder, FrontEnd("button")))
         {
-            SettingsService.OpenProjectSettings("Window/2D/Sprite Packer");
+            EditorApplication.ExecuteMenuItem("Window/2D/Sprite Packer");
         }
 
         guiBuilder.text = "Tile Palette";
         if (GUILayout.Button(guiBuilder, FrontEnd("button")))
         {
-            SettingsService.OpenProjectSettings("Window/2D/Tile Palette");
+            EditorApplication.ExecuteMenuItem("Window/2D/Tile Palette");
         }
 
         // AI
@@ -326,7 +326,7 @@ class Quikbar : EditorWindow
         guiBuilder.text = "Navigation";
         if (GUILayout.Button(guiBuilder, FrontEnd("button")))
         {
-            SettingsService.OpenProjectSettings("Window/AI/Navigation");
+            EditorApplication.ExecuteMenuItem("Window/AI/Navigation");
         }
 
         GUILayout.Space(4f);
